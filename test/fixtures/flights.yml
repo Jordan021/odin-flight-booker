@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+flight_one:
+  departure_airport_id: 1
+  arrival_airport_id: 2
+  start: 2019-05-09 7:45:31
+  end: 2019-05-09 10:45:31
+
+flight_two:
+  departure_airport_id: 2
+  arrival_airport_id: 1
+  start: 2019-05-09 9:45:31
+  end: 2019-05-09 11:45:31
