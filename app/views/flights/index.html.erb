@@ -1,5 +1,30 @@
-<%= form_for("/flights", method: "get") do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+<%= form_for("flights", method: "get") do |f| %>
+  <%= f.label :departure %>
+  <%= f.select(:departure_airport_id, @departure_airports) %></br>
 
+  <%= f.label :arrival %>
+  <%= f.select(:arrival_airport_id, @arrival_airports) %></br>
+
+  <%= f.label :passengers %>
+  <%= f.select(:passengers, @passengers) %></br>
+  
+  <%= f.label :date %>
+  <%= date_field_tag('flights[leaving_date]', value = @flight_date, 
+                    min: @first_date, max: @last_date) %> 
+  </br>
+
+  <%= f.submit "Search" %>
+<% end %>
+</br>
+<% if search = params[:flights] %>
+  <%= form_for('bookings', method: 'get') do |f| %>
+    <%= f.label :results, 'Search Results'%></br>
+    <% @search_result.each do |q| %>
+      <%= f.radio_button('flight', q.id )%>
+      <%= @search_result.ids %>
+    <% end %>
+    <%= f.hidden_field :passengers, :value => @passenger %></br>
+    <%= f.submit "Search" %>
+
+  <% end %>
 <% end %>
