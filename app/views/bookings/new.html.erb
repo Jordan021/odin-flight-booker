@@ -1,0 +1,28 @@
+<h1>Bookings</h1>
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
+<%= form_for(@booking) do |f| %>
+  <h5>Flight Details:</h5>
+  <%= f.label :flight, "#{@flight.id},
+                        #{@flight.departure_airport.name},
+                        #{@flight.arrival_airport.name},
+                        #{@flight.start}" %>
+  <%= f.hidden_field :flight_id, :value => @flight.id %>
+  </br>
+  <% num = 0 %>
+  <% @num_passengers.to_i.times do %>
+    <%= f.fields_for :passengers, Passenger.new do |p| %>
+      <%= p.label :passenger, "Passenger #{num += 1}" %></br>
+      <%= p.label :name %>
+      <%= p.text_field :name %></br>
+      <%= p.label :email %>
+      <%= p.email_field :email %></br>
+      <%= p.hidden_field :flight_id, :value => @flight.id %>
+    <% end %>
+  <% end %>
+  </br>
+
+  <%= f.submit "Book" %>
+<% end %>

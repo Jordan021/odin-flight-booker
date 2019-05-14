@@ -1,3 +1,8 @@
+<h1>Flight Bookings</h1>
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+<h3>Search for flights</h3>
 <%= form_for("flights", method: "get") do |f| %>
   <%= f.label :departure %>
   <%= f.select(:departure_airport_id, @departure_airports) %></br>
@@ -17,11 +22,17 @@
 <% end %>
 </br>
 <% if search = params[:flights] %>
-  <%= form_for('bookings', method: 'get') do |f| %>
-    <%= f.label :results, 'Search Results'%></br>
-    <% @search_result.each do |q| %>
-      <%= f.radio_button('flight', q.id )%>
-      <%= @search_result.ids %>
+  <%= form_for('booking', url: new_booking_url, method: :get) do |f| %>
+    <%= f.label :results, 'Search Results:'%></br>
+    <% @search_result.each do |flight| %>
+      <%= f.label :flight, "#{flight.departure_airport.name}
+                            #{flight.arrival_airport.name}
+                            #{flight.start}" %>
+      <%= f.radio_button :flight, flight.id, checked: true %>
+      </br>
+      </br>
+
+      Date: <%= @leave_date %>
     <% end %>
     <%= f.hidden_field :passengers, :value => @passenger %></br>
     <%= f.submit "Search" %>
