@@ -1,41 +1,44 @@
+<div class='container'>
 <h1>Flight Bookings</h1>
-<% flash.each do |key, value| %>
-  <div class="alert alert-<%= key %>"><%= value %></div>
-<% end %>
-<h3>Search for flights</h3>
-<%= form_for("flights", method: "get") do |f| %>
-  <%= f.label :departure %>
-  <%= f.select(:departure_airport_id, @departure_airports) %></br>
-
-  <%= f.label :arrival %>
-  <%= f.select(:arrival_airport_id, @arrival_airports) %></br>
-
-  <%= f.label :passengers %>
-  <%= f.select(:passengers, @passengers) %></br>
-  
-  <%= f.label :date %>
-  <%= date_field_tag('flights[leaving_date]', value = @flight_date, 
-                    min: @first_date, max: @last_date) %> 
-  </br>
-
-  <%= f.submit "Search" %>
-<% end %>
-</br>
-<% if search = params[:flights] %>
-  <%= form_for('booking', url: new_booking_url, method: :get) do |f| %>
-    <%= f.label :results, 'Search Results:'%></br>
-    <% @search_result.each do |flight| %>
-      <%= f.label :flight, "#{flight.departure_airport.name}
-                            #{flight.arrival_airport.name}
-                            #{flight.start}" %>
-      <%= f.radio_button :flight, flight.id, checked: true %>
-      </br>
-      </br>
-
-      Date: <%= @leave_date %>
-    <% end %>
-    <%= f.hidden_field :passengers, :value => @passenger %></br>
-    <%= f.submit "Search" %>
-
+<div class="row">
+<div class="col-sm">
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>"><%= value %></div>
   <% end %>
-<% end %>
+  <h3>Search for flights</h3>
+  <%= form_for("flights", method: "get") do |f| %>
+    <%= f.label :departure %>
+    <%= f.select(:departure_airport_id, @departure_airports,{}, {:class => 'form-control'}) %></br>
+
+    <%= f.label :arrival %>
+    <%= f.select(:arrival_airport_id, @arrival_airports,{}, {class:'form-control'}) %></br>
+
+    <%= f.label :passengers %>
+    <%= f.select(:passengers, @passengers,{}, {class:'form-control'}) %></br>
+  
+    <%= f.label :date %>
+    <%= date_field_tag('flights[leaving_date]', value = @flight_date, 
+                        min: @first_date, max: @last_date, class:'form-control') %> 
+  </br>
+    <%= f.submit "Search", class: 'btn btn-primary' %>
+  <% end %>
+</div> 
+</br>
+<div class='col-sm'>
+  <% if search = params[:flights] %>
+    <%= form_for('booking', url: new_booking_url, method: :get) do |f| %>
+      <h3><%= f.label :results, 'Search Results:'%></h3></br>
+      <% @search_result.each do |flight| %>
+        <%= f.label :flight, "#{flight.departure_airport.name},
+                              #{flight.arrival_airport.name},
+                              #{flight.start}"%>
+        <%= f.radio_button :flight, flight.id, checked: true %>
+      </br>
+      <% end %>
+      <%= f.hidden_field :passengers, :value => @passenger %></br>
+      <%= f.submit "Search", class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
+</div>
+</div>
+</div>

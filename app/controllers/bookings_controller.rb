@@ -10,13 +10,14 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     if @booking.save 
       flash[:info] = "Booking confirmed"
-      redirect_to root_url
+      redirect_to booking_path(@booking)
     else 
       flash.now[:error] = "Details incorrect"
     end 
   end 
 
   def show 
+    @booking = Booking.find_by_id(params[:id])
   end 
 
   private 

@@ -13,7 +13,7 @@ class FlightsController < ApplicationController
       @leave_date = search[:leaving_date]
       @passenger = search[:passengers]
       
-      @search_result = Flight.departing(search[:departure_airport_id]).leave_day(
+      @search_result = Flight.departing(search[:departure_airport_id]).arrivaling(search[:arrival_airport_id]).leave_day(
                        search[:leaving_date])
     end 
     
